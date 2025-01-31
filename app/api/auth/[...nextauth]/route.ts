@@ -5,6 +5,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
+import type { NextRequest } from 'next/server';
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -16,7 +17,7 @@ async function getUser(email: string): Promise<User | undefined> {
   }
 }
 
-const handler = NextAuth({
+const auth = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -41,5 +42,5 @@ const handler = NextAuth({
   ],
 });
 
-export const GET = handler;
-export const POST = handler; 
+export const GET = auth;
+export const POST = auth; 
