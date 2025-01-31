@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
  
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    const user = await sql<User>`SELECT * from USERS where email=${email}`;
+    const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     return user.rows[0];
   } catch (error) {
     console.error('Failed to fetch user:', error);
@@ -16,7 +16,7 @@ async function getUser(email: string): Promise<User | undefined> {
   }
 }
  
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -36,7 +36,7 @@ export const { auth, signIn, signOut } = NextAuth({
  
         console.log('Invalid credentials');
         return null;
-        }
+      }
     }),
   ],
 });
